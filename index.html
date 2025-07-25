@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CORAZÓN DE MELÓN - Panza llena, vida buena</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Pacifico&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/lucide-react@0.292.0/dist/lucide-react.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+            background-color: #FFFBEB; /* Cream background */
+        }
+        .brand-title {
+            font-family: 'Pacifico', cursive;
+        }
+        .hero-bg {
+            background-image: url('https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=2680&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+        .gradient-text {
+            background: -webkit-linear-gradient(45deg, #F97316, #15803D); /* Orange to Green Gradient */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .section-title {
+            font-family: 'Inter', sans-serif;
+            font-weight: 900;
+            font-size: 2.5rem;
+        }
+        .card {
+            background-color: white;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .btn-primary {
+            background-color: #F97316; /* Primary Orange */
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #EA580C; /* Darker Orange on hover */
+        }
+        .accordion-button {
+            width: 100%;
+            text-align: left;
+            padding: 1.25rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.125rem;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+        }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #F97316; /* Orange loader */
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        /* Dropdown styles */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 0.5rem;
+        }
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown-content a:hover {background-color: #f1f1f1;}
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+    </style>
+</head>
+<body class="bg-amber-50 text-gray-800">
+
+    <!-- Header -->
+    <header class="bg-white/80 backdrop-blur-lg shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#inicio" class="brand-title text-3xl text-orange-500">Corazón de Melón</a>
+            <div class="hidden md:flex items-center space-x-6 text-lg">
+                <div class="dropdown">
+                    <button class="hover:text-orange-500 transition-colors">🛠️ Herramientas</button>
+                    <div class="dropdown-content">
+                        <a href="#calculadoras">Calculadoras</a>
+                        <a href="#menu-personalizado">Planificador de Menú</a>
+                        <a href="#analizador-comida">Analizador de Comida</a>
+                        <a href="#snacks">Buscador de Snacks</a>
+                        <a href="#recetas">Crea tu Receta</a>
+                    </div>
+                </div>
+                 <a href="#retos" class="hover:text-orange-500 transition-colors">🏆 Retos</a>
+                <a href="#guia-estudiante" class="hover:text-orange-500 transition-colors">🎓 Guía Estudiante</a>
+                <a href="#rutinas" class="hover:text-orange-500 transition-colors">🏋️ Rutinas</a>
+                <a href="#bienestar" class="hover:text-orange-500 transition-colors">🧠 Bienestar</a>
+                <a href="#conceptos" class="hover:text-orange-500 transition-colors">📚 Conceptos</a>
+            </div>
+            <a href="#mitos" class="hidden md:block btn btn-primary">Investiga un Mito</a>
+            <button id="mobile-menu-button" class="md:hidden text-gray-700 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </nav>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden">
+            <a href="#calculadoras" class="block py-2 px-4 text-sm hover:bg-orange-100">🛠️ Calculadoras</a>
+            <a href="#menu-personalizado" class="block py-2 px-4 text-sm hover:bg-orange-100">📅 Planificador de Menú</a>
+            <a href="#analizador-comida" class="block py-2 px-4 text-sm hover:bg-orange-100">📸 Analizador de Comida</a>
+            <a href="#snacks" class="block py-2 px-4 text-sm hover:bg-orange-100">🥨 Buscador de Snacks</a>
+            <a href="#recetas" class="block py-2 px-4 text-sm hover:bg-orange-100">🍳 Crea tu Receta</a>
+            <a href="#retos" class="block py-2 px-4 text-sm hover:bg-orange-100">🏆 Retos</a>
+            <a href="#guia-estudiante" class="block py-2 px-4 text-sm hover:bg-orange-100">🎓 Guía Estudiante</a>
+            <a href="#rutinas" class="block py-2 px-4 text-sm hover:bg-orange-100">🏋️ Rutinas</a>
+            <a href="#bienestar" class="block py-2 px-4 text-sm hover:bg-orange-100">🧠 Bienestar</a>
+            <a href="#conceptos" class="block py-2 px-4 text-sm hover:bg-orange-100">📚 Conceptos</a>
+            <a href="#mitos" class="block py-2 px-4 text-sm font-bold text-orange-500 hover:bg-orange-100">Investiga un Mito</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="inicio" class="hero-bg text-white min-h-[60vh] flex items-center">
+            <div class="container mx-auto px-6 text-center bg-black/50 rounded-xl p-10">
+                <h1 class="brand-title text-5xl md:text-7xl mb-4" style="color: #FDBA74;">Corazón de Melón</h1>
+                <p class="text-2xl md:text-4xl font-semibold">Panza llena, vida buena</p>
+                <p class="mt-4 max-w-2xl mx-auto text-lg">Tu guía para una vida saludable y feliz. Encuentra herramientas, consejos y rutinas para nutrir tu cuerpo y mente.</p>
+                <a href="#calculadoras" class="mt-8 btn btn-primary text-xl">¡Empieza ahora!</a>
+            </div>
+        </section>
+
+        <!-- Calculadoras Section -->
+        <section id="calculadoras" class="py-20">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title text-center mb-12 gradient-text">Herramientas para Ti</h2>
+                <div class="card p-6 md:p-8 max-w-4xl mx-auto">
+                    <!-- Tabs -->
+                    <div class="border-b border-gray-200 mb-6">
+                        <nav class="-mb-px flex space-x-6 overflow-x-auto" aria-label="Tabs">
+                            <button class="tab-btn active text-orange-600 border-orange-600 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-lg" data-tab="calorias">Requerimiento Calórico</button>
+                            <button class="tab-btn text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-lg" data-tab="macros">Distribución de Macros</button>
+                            <button class="tab-btn text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-lg" data-tab="imc">IMC</button>
+                        </nav>
+                    </div>
+
+                    <!-- Calorie Calculator -->
+                    <div id="calorias-tab" class="tab-content">
+                        <h3 class="text-2xl font-bold mb-4">Calculadora de Requerimiento Calórico</h3>
+                        <p class="mb-6 text-gray-600">Ingresa tus datos para estimar cuántas calorías necesitas al día para cumplir tus objetivos.</p>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="sexo-cal" class="block text-sm font-medium text-gray-700">Sexo</label>
+                                <select id="sexo-cal" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm">
+                                    <option value="hombre">Hombre</option>
+                                    <option value="mujer">Mujer</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="edad-cal" class="block text-sm font-medium text-gray-700">Edad</label>
+                                <input type="number" id="edad-cal" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm" placeholder="Ej: 19">
+                            </div>
+                            <div>
+                                <label for="peso-cal" class="block text-sm font-medium text-gray-700">Peso (kg)</label>
+                                <input type="number" id="peso-cal" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm" placeholder="Ej: 65">
+                            </div>
+                            <div>
+                                <label for="altura-cal" class="block text-sm font-medium text-gray-700">Altura (cm)</label>
+                                <input type="number" id="altura-cal" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm" placeholder="Ej: 170">
+                            </div>
+                            <div>
+                                <label for="actividad-cal" class="block text-sm font-medium text-gray-700">Nivel de Actividad Física</label>
+                                <select id="actividad-cal" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm">
+                                    <option value="1.2">Sedentario (poco o ningún ejercicio)</option>
+                                    <option value="1.375">Ligero (ejercicio 1-3 días/semana)</option>
+                                    <option value="1.55">Moderado (ejercicio 3-5 días/semana)</option>
+                                    <option value="1.725">Activo (ejercicio 6-7 días/semana)</option>
+                                    <option value="1.9">Muy Activo (trabajo físico o ejercicio muy duro)</option>
+                                </select>
+                            </div>
+                             <div>
+                                <label for="estres-cal" class="block text-sm font-medium text-gray-700">Factor de Estrés (Opcional)</label>
+                                <select id="estres-cal" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm">
+                                    <option value="1.0">Sin estrés (Normal)</option>
+                                    <option value="1.15">Cirugía menor</option>
+                                    <option value="1.4">Trauma esquelético</option>
+                                    <option value="1.6">Sepsis</option>
+                                     <option value="1.5">Cáncer</option>
+                                    <option value="2.1">Quemaduras</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button id="calcular-cal" class="mt-6 btn btn-primary w-full">Calcular Calorías</button>
+                        <div id="resultado-cal" class="mt-6 p-4 bg-amber-100 rounded-lg text-center hidden"></div>
+                    </div>
+
+                    <!-- NEW: Macro Distributor -->
+                    <div id="macros-tab" class="tab-content hidden">
+                        <h3 class="text-2xl font-bold mb-4">✨ Distribuidor de Macronutrientes</h3>
+                        <p class="mb-6 text-gray-600">Introduce tus calorías diarias (puedes obtenerlas de la pestaña anterior) y tu objetivo. La IA te sugerirá cómo distribuir tus proteínas, carbohidratos y grasas.</p>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="calorias-macros" class="block text-sm font-medium text-gray-700">Tus Calorías Diarias</label>
+                                <input type="number" id="calorias-macros" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm" placeholder="Ej: 2200">
+                            </div>
+                            <div>
+                                <label for="objetivo-macros" class="block text-sm font-medium text-gray-700">Tu Objetivo Principal</label>
+                                <select id="objetivo-macros" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm">
+                                    <option>Mantener peso</option>
+                                    <option>Perder peso</option>
+                                    <option>Aumentar masa muscular</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button id="calcular-macros-btn" class="mt-6 btn btn-primary w-full">✨ Distribuir mis Macros</button>
+                        <div id="resultado-macros" class="mt-6 p-4 border border-gray-200 rounded-lg hidden">
+                            <div id="macros-loader" class="hidden text-center">
+                                <div class="loader"></div>
+                                <p class="mt-2">Calculando tu distribución ideal...</p>
+                            </div>
+                            <div id="macros-content"></div>
+                        </div>
+                    </div>
+
+                    <!-- IMC Calculator -->
+                    <div id="imc-tab" class="tab-content hidden">
+                        <h3 class="text-2xl font-bold mb-4">Calculadora de IMC</h3>
+                        <p class="mb-6 text-gray-600">El Índice de Masa Corporal (IMC) es una medida que relaciona tu peso y altura para estimar si tienes un peso saludable.</p>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="peso-imc" class="block text-sm font-medium text-gray-700">Peso (kg)</label>
+                                <input type="number" id="peso-imc" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm" placeholder="Ej: 65">
+                            </div>
+                            <div>
+                                <label for="altura-imc" class="block text-sm font-medium text-gray-700">Altura (cm)</label>
+                                <input type="number" id="altura-imc" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm" placeholder="Ej: 170">
+                            </div>
+                        </div>
+                        <button id="calcular-imc" class="mt-6 btn btn-primary w-full">Calcular IMC</button>
+                        <div id="resultado-imc" class="mt-6 p-4 bg-amber-100 rounded-lg text-center hidden"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Menu Generator Section -->
+        <section id="menu-personalizado" class="py-20">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="section-title mb-4 gradient-text">📅 Planificador de Menú Semanal</h2>
+                <p class="max-w-3xl mx-auto text-lg mb-8 text-gray-600">Obtén un menú de ejemplo para un día o una semana completa, adaptado a ti. Creado con IA para darte ideas realistas y saludables.</p>
+                <div class="card max-w-3xl mx-auto p-8 text-left">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="objetivo-menu" class="block text-sm font-medium text-gray-700">¿Cuál es tu objetivo?</label>
+                            <select id="objetivo-menu" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm">
+                                <option>Perder peso</option>
+                                <option>Mantener mi peso</option>
+                                <option>Aumentar masa muscular</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="ingresos-menu" class="block text-sm font-medium text-gray-700">Presupuesto para comida</label>
+                            <select id="ingresos-menu" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm">
+                                <option>Económico (uso de básicos)</option>
+                                <option>Moderado (variedad media)</option>
+                                <option>Flexible (más variedad)</option>
+                            </select>
+                        </div>
+                         <div class="md:col-span-2">
+                            <label for="duracion-menu" class="block text-sm font-medium text-gray-700">Duración del Plan</label>
+                            <select id="duracion-menu" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm">
+                                <option value="1">1 Día</option>
+                                <option value="7">7 Días (Semana Completa)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button id="generar-menu" class="mt-6 btn btn-primary w-full">✨ Generar mi menú</button>
+                    <div id="resultado-menu" class="mt-6 p-4 border border-gray-200 rounded-lg hidden">
+                        <div id="menu-loader" class="hidden text-center">
+                            <div class="loader"></div>
+                            <p class="mt-2">Creando un menú delicioso para ti...</p>
+                        </div>
+                        <div id="menu-content" class="prose max-w-none"></div>
+                        <button id="generar-lista-compras" class="mt-4 btn btn-primary w-full hidden">✨ Crear Lista de Compras</button>
+                    </div>
+                    <div id="resultado-lista" class="mt-6 p-4 border border-gray-200 rounded-lg hidden">
+                        <div id="lista-loader" class="hidden text-center">
+                            <div class="loader"></div>
+                            <p class="mt-2">Creando tu lista de compras...</p>
+                        </div>
+                        <div id="lista-content"></div>
+                    </div>
+                     <p class="text-xs text-gray-500 mt-4 text-center">Nota: Este menú es una sugerencia generada por IA y no reemplaza la consulta con un profesional de la nutrición.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Food Analyzer Section -->
+        <section id="analizador-comida" class="py-20 bg-white">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="section-title mb-4 gradient-text">📸 Analizador de Comidas</h2>
+                <p class="max-w-3xl mx-auto text-lg mb-8 text-gray-600">¿No sabes si tu platillo es balanceado? Sube una foto y deja que nuestra IA te dé un análisis rápido y consejos para mejorarlo.</p>
+                <div class="card max-w-3xl mx-auto p-8 text-left">
+                    <label for="food-image-upload" class="block text-sm font-medium text-gray-700">Sube la foto de tu comida</label>
+                    <input type="file" id="food-image-upload" accept="image/*" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100"/>
+                    <div id="image-preview-container" class="mt-4 hidden">
+                        <img id="image-preview" src="#" alt="Vista previa de la comida" class="max-h-60 rounded-lg mx-auto shadow-md"/>
+                    </div>
+                    <button id="analizar-comida-btn" class="mt-6 btn btn-primary w-full" disabled>✨ Analizar mi comida</button>
+                    <div id="resultado-analizador" class="mt-6 p-4 border border-gray-200 rounded-lg hidden">
+                        <div id="analizador-loader" class="hidden text-center">
+                            <div class="loader"></div>
+                            <p class="mt-2">Analizando tu platillo...</p>
+                        </div>
+                        <div id="analizador-content"></div>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-4 text-center">Nota: Este análisis es una estimación generada por IA y no debe ser considerada como un diagnóstico médico o nutricional preciso.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Snack Finder Section -->
+        <section id="snacks" class="py-20">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="section-title mb-4 gradient-text">🥨 Buscador de Snacks Saludables</h2>
+                <p class="max-w-3xl mx-auto text-lg mb-8 text-gray-600">¿Tienes un antojo? Descríbelo y la IA te dará opciones saludables para satisfacerlo.</p>
+                <div class="card max-w-3xl mx-auto p-8 text-left">
+                    <label for="craving-input" class="block text-sm font-medium text-gray-700">¿Qué se te antoja?</label>
+                    <textarea id="craving-input" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm" placeholder="Ej: algo salado y crujiente para ver una película..."></textarea>
+                    <button id="buscar-snack-btn" class="mt-6 btn btn-primary w-full">✨ Encontrar mi Snack</button>
+                    <div id="resultado-snack" class="mt-6 p-4 border border-gray-200 rounded-lg hidden">
+                        <div id="snack-loader" class="hidden text-center">
+                            <div class="loader"></div>
+                            <p class="mt-2">Buscando el snack perfecto...</p>
+                        </div>
+                        <div id="snack-content"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recipe Creator Section -->
+        <section id="recetas" class="py-20 bg-white">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="section-title mb-4 gradient-text">🍳 Crea tu Receta</h2>
+                <p class="max-w-3xl mx-auto text-lg mb-8 text-gray-600">¿Tienes ingredientes en tu refri y no sabes qué cocinar? Escríbelos aquí y la IA creará una receta saludable para ti.</p>
+                <div class="card max-w-3xl mx-auto p-8 text-left">
+                    <label for="ingredients-input" class="block text-sm font-medium text-gray-700">Escribe tus ingredientes (separados por comas)</label>
+                    <textarea id="ingredients-input" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm" placeholder="Ej: pollo, brócoli, arroz, salsa de soya, ajo"></textarea>
+                    <button id="crear-receta-btn" class="mt-6 btn btn-primary w-full">✨ Crear mi Receta</button>
+                    <div id="resultado-receta" class="mt-6 p-4 border border-gray-200 rounded-lg hidden">
+                        <div id="receta-loader" class="hidden text-center">
+                            <div class="loader"></div>
+                            <p class="mt-2">Buscando una receta deliciosa...</p>
+                        </div>
+                        <div id="receta-content"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+         <!-- Weekly Challenge Section -->
+        <section id="retos" class="py-20">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="section-title mb-4 gradient-text">🏆 Reto de Bienestar Semanal</h2>
+                <p class="max-w-3xl mx-auto text-lg mb-8 text-gray-600">¡Acepta un nuevo reto cada semana para mejorar tus hábitos! Haz clic en el botón para generar tu desafío.</p>
+                <div class="card max-w-3xl mx-auto p-8">
+                    <div id="reto-content" class="min-h-[150px] flex items-center justify-center p-4 bg-amber-50 rounded-lg">
+                        <p class="text-gray-500">Tu próximo reto aparecerá aquí...</p>
+                    </div>
+                    <div id="reto-loader" class="hidden text-center">
+                        <div class="loader"></div>
+                        <p class="mt-2">Generando un nuevo reto...</p>
+                    </div>
+                    <button id="generar-reto-btn" class="mt-6 btn btn-primary w-full">✨ Generar Nuevo Reto</button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Student Survival Guide Section -->
+        <section id="guia-estudiante" class="py-20 bg-white">
+             <div class="container mx-auto px-6 text-center">
+                <h2 class="section-title mb-4 gradient-text">🎓 Guía de Supervivencia para Estudiantes</h2>
+                <p class="max-w-3xl mx-auto text-lg mb-8 text-gray-600">Consejos rápidos para situaciones comunes en la vida estudiantil. ¡Haz clic en un tema para obtener ayuda de la IA!</p>
+                <div class="card max-w-3xl mx-auto p-8">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                        <button class="btn-guia btn-primary" data-topic="Energía para estudiar">⚡ Energía para estudiar</button>
+                        <button class="btn-guia btn-primary" data-topic="Comidas rápidas y sanas">🏃 Comidas rápidas y sanas</button>
+                        <button class="btn-guia btn-primary" data-topic="Comer con poco presupuesto">💰 Comer con poco presupuesto</button>
+                    </div>
+                    <div id="guia-content-area" class="mt-6 p-4 bg-amber-50 rounded-lg hidden">
+                        <div id="guia-loader" class="hidden text-center">
+                            <div class="loader"></div>
+                            <p class="mt-2">Generando consejos para ti...</p>
+                        </div>
+                        <div id="guia-content" class="text-left"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recomendaciones Section -->
+        <section id="recomendaciones" class="py-20">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title text-center mb-12 gradient-text">Recomendaciones Clave</h2>
+                <div class="grid md:grid-cols-3 gap-8 text-center">
+                    <div class="card p-6">
+                        <div class="text-7xl mb-4">🍎</div>
+                        <h3 class="text-2xl font-bold text-center mb-4">Nutrición</h3>
+                        <ul class="space-y-2 text-gray-600 list-disc list-inside text-left">
+                            <li>Incluye frutas y verduras en todas tus comidas.</li>
+                            <li>Prefiere granos integrales (avena, arroz integral).</li>
+                            <li>Modera el consumo de azúcares y grasas saturadas.</li>
+                            <li>Elige fuentes de proteína magra (pollo, pescado, legumbres).</li>
+                            <li>No te saltes el desayuno, ¡es clave para empezar el día!</li>
+                        </ul>
+                    </div>
+                    <div class="card p-6">
+                        <div class="text-7xl mb-4">💪</div>
+                        <h3 class="text-2xl font-bold text-center mb-4">Actividad Física</h3>
+                        <ul class="space-y-2 text-gray-600 list-disc list-inside text-left">
+                            <li>Realiza al menos 30-60 minutos de actividad al día.</li>
+                            <li>Combina cardio (correr, bailar) con fuerza (pesas, ligas).</li>
+                            <li>La constancia es más importante que la intensidad.</li>
+                            <li>Encuentra una actividad que disfrutes para no abandonarla.</li>
+                            <li>Estira siempre antes y después de ejercitarte.</li>
+                        </ul>
+                    </div>
+                    <div class="card p-6">
+                        <div class="text-7xl mb-4">🧘‍♀️</div>
+                        <h3 class="text-2xl font-bold text-center mb-4">Salud Mental y Hábitos</h3>
+                        <ul class="space-y-2 text-gray-600 list-disc list-inside text-left">
+                            <li>Duerme de 7 a 9 horas diarias.</li>
+                            <li>Mantente hidratado, bebe suficiente agua.</li>
+                            <li>Dedica tiempo a tus hobbies y a relajarte.</li>
+                            <li>Habla de tus sentimientos, no tengas miedo de pedir ayuda.</li>
+                            <li>Limita el tiempo en pantallas antes de dormir.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Rutinas en Casa -->
+        <section id="rutinas" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title text-center mb-12 gradient-text">🏋️ Generador de Rutina Semanal</h2>
+                <div class="card max-w-3xl mx-auto p-8 text-left">
+                     <h3 class="text-2xl font-bold mb-4">✨ Crea tu Plan de Ejercicio</h3>
+                     <p class="mb-6 text-gray-600">Dinos tu objetivo y la IA creará un plan de 7 días para ti, adaptado a tu nivel y equipo disponible.</p>
+                     <div class="grid md:grid-cols-3 gap-6">
+                        <div>
+                            <label for="objetivo-rutina" class="block text-sm font-medium text-gray-700">Objetivo</label>
+                            <select id="objetivo-rutina" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm">
+                                <option>Tonificar</option>
+                                <option>Ganar Fuerza</option>
+                                <option>Cardio y Resistencia</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="nivel-rutina" class="block text-sm font-medium text-gray-700">Nivel</label>
+                            <select id="nivel-rutina" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm">
+                                <option>Principiante</option>
+                                <option>Intermedio</option>
+                                <option>Avanzado</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="equipo-rutina" class="block text-sm font-medium text-gray-700">Equipo</label>
+                            <select id="equipo-rutina" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm">
+                                <option>Sin equipo</option>
+                                <option>Ligas de resistencia</option>
+                                <option>Mancuernas</option>
+                            </select>
+                        </div>
+                     </div>
+                     <button id="generar-rutina-btn" class="mt-6 btn btn-primary w-full">✨ Generar mi rutina</button>
+                     <div id="resultado-rutina" class="mt-6 p-4 border border-gray-200 rounded-lg hidden">
+                        <div id="rutina-loader" class="hidden text-center">
+                            <div class="loader"></div>
+                            <p class="mt-2">Creando tu plan de ejercicio...</p>
+                        </div>
+                        <div id="rutina-content" class="prose max-w-none"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+         <!-- Emotional Wellbeing Section -->
+        <section id="bienestar" class="py-20">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="section-title mb-4 gradient-text">🧠 Bienestar Emocional</h2>
+                <p class="max-w-3xl mx-auto text-lg mb-8 text-gray-600">Aprende a manejar tus emociones sin recurrir a la comida. Describe cómo te sientes y recibe consejos de nuestro asistente.</p>
+                <div class="card max-w-3xl mx-auto p-8 text-left">
+                    <label for="emocion-input" class="block text-sm font-medium text-gray-700">¿Cómo te sientes ahora mismo?</label>
+                    <textarea id="emocion-input" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm" placeholder="Ej: Me siento estresado por un examen y solo quiero comer chocolate..."></textarea>
+                    <button id="ayuda-antojo-btn" class="mt-6 btn btn-primary w-full">✨ Ayúdame a manejar este antojo</button>
+                    <div id="resultado-antojo" class="mt-6 p-4 border border-gray-200 rounded-lg hidden">
+                        <div id="antojo-loader" class="hidden text-center">
+                            <div class="loader"></div>
+                            <p class="mt-2">Buscando una estrategia para ti...</p>
+                        </div>
+                        <div id="antojo-content"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NEW: First Appointment & Flags Section -->
+        <section id="primera-cita" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title text-center mb-12 gradient-text">Tu Cita con el Nutriólogo</h2>
+                <div class="grid md:grid-cols-2 gap-8 items-start">
+                    <div class="card p-8">
+                        <h3 class="text-2xl font-bold text-center mb-4">✅ Green Flags</h3>
+                        <p class="text-center text-gray-600 mb-4">Señales de un buen profesional:</p>
+                        <ul class="space-y-3 text-gray-600 list-disc list-inside">
+                            <li><span class="font-semibold">Personaliza tu plan:</span> Se toma el tiempo de conocerte y adapta las recomendaciones a tus gustos, horarios y estilo de vida.</li>
+                            <li><span class="font-semibold">Te escucha sin juzgar:</span> Crea un espacio seguro donde puedes hablar con honestidad sobre tu relación con la comida.</li>
+                            <li><span class="font-semibold">Usa la ciencia como base:</span> Sus recomendaciones están basadas en evidencia científica, no en productos "milagro" o dietas de moda.</li>
+                            <li><span class="font-semibold">Fomenta hábitos sostenibles:</span> Te enseña a tomar decisiones saludables que puedas mantener a largo plazo, en lugar de soluciones rápidas.</li>
+                            <li><span class="font-semibold">Resuelve tus dudas:</span> Te explica el porqué de las cosas con paciencia y claridad.</li>
+                        </ul>
+                    </div>
+                    <div class="card p-8">
+                        <h3 class="text-2xl font-bold text-center mb-4">🚩 Red Flags</h3>
+                        <p class="text-center text-gray-600 mb-4">Señales de alerta a evitar:</p>
+                        <ul class="space-y-3 text-gray-600 list-disc list-inside">
+                            <li><span class="font-semibold">Dietas genéricas:</span> Te entrega una dieta impresa sin haberte hecho una evaluación completa.</li>
+                            <li><span class="font-semibold">Prohibiciones extremas:</span> Elimina grupos enteros de alimentos (como carbohidratos o grasas) sin una razón médica válida.</li>
+                            <li><span class="font-semibold">Venta de productos:</span> Insiste en que compres los suplementos, pastillas o polvos que él mismo vende.</li>
+                            <li><span class="font-semibold">Promesas irreales:</span> Te garantiza que perderás una cantidad de peso exagerada en muy poco tiempo.</li>
+                            <li><span class="font-semibold">Te hace sentir culpable:</span> Te regaña o te juzga si no sigues el plan a la perfección.</li>
+                        </ul>
+                    </div>
+                    <div class="md:col-span-2 card p-8 mt-8">
+                         <h3 class="text-2xl font-bold text-center mb-4">📝 Consejos para tu Primera Cita</h3>
+                         <ul class="space-y-3 text-gray-600">
+                            <li class="flex items-start"><span class="mr-2">💬</span> <strong>Sé 100% honesto:</strong> No te preocupes, el nutriólogo no está para juzgarte. Contarle tus hábitos reales es la única forma de que pueda crear un plan que de verdad funcione para ti.</li>
+                            <li class="flex items-start"><span class="mr-2">❓</span> <strong>Prepara tus preguntas:</strong> Anota todas las dudas que tengas. ¿Ese mito que escuchaste es verdad? ¿Qué puedes comer antes de hacer ejercicio? ¡No hay preguntas tontas!</li>
+                            <li class="flex items-start"><span class="mr-2">🎯</span> <strong>Piensa en tus metas:</strong> ¿Qué quieres lograr? No tiene que ser solo "bajar de peso". Puede ser tener más energía, mejorar tu digestión o simplemente aprender a comer mejor.</li>
+                            <li class="flex items-start"><span class="mr-2">🧘</span> <strong>Ve con la mente abierta:</strong> Un buen plan de nutrición es un viaje de aprendizaje. Sé paciente contigo mismo y celebra los pequeños logros.</li>
+                         </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NEW: Basic Concepts Section -->
+        <section id="conceptos" class="py-20">
+            <div class="container mx-auto px-6 max-w-4xl">
+                <h2 class="section-title text-center mb-12 gradient-text">📚 Conceptos Básicos de Nutrición</h2>
+                <div class="space-y-4" id="conceptos-accordion">
+                    <!-- Concepts will be inserted here with JS -->
+                </div>
+            </div>
+        </section>
+        
+        <!-- NEW: Health Parameters Section -->
+        <section id="parametros" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title text-center mb-12 gradient-text">🩺 Parámetros Normales de Salud</h2>
+                <div class="card p-8 max-w-4xl mx-auto">
+                    <p class="text-center text-gray-600 mb-6">Estos son algunos valores de referencia generales para adultos. Recuerda que siempre deben ser interpretados por un profesional de la salud.</p>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr>
+                                    <th class="py-2 px-4 border-b-2 border-orange-200">Parámetro</th>
+                                    <th class="py-2 px-4 border-b-2 border-orange-200">Condición</th>
+                                    <th class="py-2 px-4 border-b-2 border-orange-200">Valor de Referencia</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="hover:bg-amber-50">
+                                    <td class="py-2 px-4 border-b" rowspan="3">Glucosa en Sangre</td>
+                                    <td class="py-2 px-4 border-b">Normal (en ayunas)</td>
+                                    <td class="py-2 px-4 border-b">70 - 99 mg/dL</td>
+                                </tr>
+                                <tr class="hover:bg-amber-50">
+                                    <td class="py-2 px-4 border-b">Diabetes (en ayunas)</td>
+                                    <td class="py-2 px-4 border-b">≥ 126 mg/dL</td>
+                                </tr>
+                                <tr class="hover:bg-amber-50">
+                                    <td class="py-2 px-4 border-b">Diabetes (2h post-comida)</td>
+                                    <td class="py-2 px-4 border-b">≥ 200 mg/dL</td>
+                                </tr>
+                                <tr class="hover:bg-amber-50">
+                                    <td class="py-2 px-4 border-b" rowspan="3">Presión Arterial</td>
+                                    <td class="py-2 px-4 border-b">Normal</td>
+                                    <td class="py-2 px-4 border-b">&lt; 120/80 mmHg</td>
+                                </tr>
+                                <tr class="hover:bg-amber-50">
+                                    <td class="py-2 px-4 border-b">Hipertensión (Estadio 1)</td>
+                                    <td class="py-2 px-4 border-b">130-139 / 80-89 mmHg</td>
+                                </tr>
+                                <tr class="hover:bg-amber-50">
+                                    <td class="py-2 px-4 border-b">Hipertensión (Estadio 2)</td>
+                                    <td class="py-2 px-4 border-b">≥ 140/90 mmHg</td>
+                                </tr>
+                                <tr class="hover:bg-amber-50">
+                                    <td class="py-2 px-4 border-b">Colesterol Total</td>
+                                    <td class="py-2 px-4 border-b">Óptimo</td>
+                                    <td class="py-2 px-4 border-b">&lt; 200 mg/dL</td>
+                                </tr>
+                                <tr class="hover:bg-amber-50">
+                                    <td class="py-2 px-4 border-b">Triglicéridos</td>
+                                    <td class="py-2 px-4 border-b">Óptimo</td>
+                                    <td class="py-2 px-4 border-b">&lt; 150 mg/dL</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mitos Section (Interactive) -->
+        <section id="mitos" class="py-20">
+            <div class="container mx-auto px-6 max-w-4xl">
+                <h2 class="section-title text-center mb-12 gradient-text">🕵️ Investigador de Mitos</h2>
+                <p class="max-w-3xl mx-auto text-lg mb-8 text-gray-600 text-center">¿Has escuchado algo sobre nutrición y no sabes si es verdad? Escríbelo aquí y deja que la IA lo investigue por ti.</p>
+                <div class="card p-8">
+                    <label for="mito-input" class="block text-sm font-medium text-gray-700">Escribe el mito o la pregunta aquí:</label>
+                    <input type="text" id="mito-input" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm" placeholder="Ej: 'Comer huevo todos los días es malo para el colesterol'">
+                    <button id="investigar-mito-btn" class="mt-6 btn btn-primary w-full">✨ Investigar Mito</button>
+                    <div id="resultado-mito" class="mt-6 p-4 border border-gray-200 rounded-lg hidden">
+                        <div id="mito-loader" class="hidden text-center">
+                            <div class="loader"></div>
+                            <p class="mt-2">Consultando la evidencia científica...</p>
+                        </div>
+                        <div id="mito-content"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-10">
+        <div class="container mx-auto px-6 text-center">
+            <p class="brand-title text-4xl text-orange-400 mb-2">Corazón de Melón</p>
+            <p class="mb-4">"Panza llena, vida buena"</p>
+            <p class="text-gray-400 text-sm">&copy; 2024 Corazón de Melón. Todos los derechos reservados. La información de este sitio es para fines educativos.</p>
+        </div>
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // --- Global Variables ---
+        let generatedMenuText = '';
+
+        // --- Mobile Menu ---
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // --- Calculators Tabs ---
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Deactivate all tabs
+                tabButtons.forEach(btn => {
+                    btn.classList.remove('active', 'text-orange-600', 'border-orange-600');
+                    btn.classList.add('text-gray-500', 'hover:text-gray-700', 'hover:border-gray-300');
+                });
+                // Activate clicked tab
+                button.classList.add('active', 'text-orange-600', 'border-orange-600');
+                button.classList.remove('text-gray-500', 'hover:text-gray-700', 'hover:border-gray-300');
+
+                // Hide all content
+                tabContents.forEach(content => {
+                    content.classList.add('hidden');
+                });
+
+                // Show content for clicked tab
+                const tabId = button.dataset.tab;
+                document.getElementById(`${tabId}-tab`).classList.remove('hidden');
+            });
+        });
+        
+        // --- Calorie Calculator ---
+        const calcularCalBtn = document.getElementById('calcular-cal');
+        calcularCalBtn.addEventListener('click', () => {
+            const sexo = document.getElementById('sexo-cal').value;
+            const edad = parseFloat(document.getElementById('edad-cal').value);
+            const peso = parseFloat(document.getElementById('peso-cal').value);
+            const altura = parseFloat(document.getElementById('altura-cal').value);
+            const actividad = parseFloat(document.getElementById('actividad-cal').value);
+            const estres = parseFloat(document.getElementById('estres-cal').value);
+            const resultadoDiv = document.getElementById('resultado-cal');
+
+            if (peso > 0 && altura > 0 && edad > 0) {
+                let geb;
+                let formulaUtilizada = '';
+
+                if (edad >= 18) {
+                    formulaUtilizada = 'Valencia (población mexicana)';
+                    if (sexo === 'hombre') {
+                        if (edad <= 30) geb = (13.37 * peso) + 747;
+                        else if (edad > 30 && edad <= 60) geb = (13.08 * peso) + 693;
+                        else geb = (14.21 * peso) + 429;
+                    } else { // mujer
+                        if (edad <= 30) geb = (11.02 * peso) + 679;
+                        else if (edad > 30 && edad <= 60) geb = (10.92 * peso) + 677;
+                        else geb = (10.98 * peso) + 520;
+                    }
+                } else {
+                    formulaUtilizada = 'Mifflin-St Jeor';
+                     if (sexo === 'hombre') {
+                        geb = (9.99 * peso) + (6.25 * altura) - (4.92 * edad) + 5;
+                    } else { // mujer
+                        geb = (9.99 * peso) + (6.25 * altura) - (4.92 * edad) - 161;
+                    }
+                }
+
+                const get = (geb * actividad * estres) + (geb * 0.10); // Added ETA
+
+                resultadoDiv.innerHTML = `
+                    <p class="text-lg">Tu Gasto Energético Basal (GEB) es de aprox. <strong class="text-orange-600">${geb.toFixed(0)} kcal</strong>.</p>
+                    <p class="text-lg mt-2">Tu Gasto Energético Total (GET) diario es aprox. <strong class="text-orange-600">${get.toFixed(0)} kcal</strong>.</p>
+                    <div class="mt-4 border-t pt-4">
+                        <h4 class="font-bold text-xl mb-2">Calorías según tu objetivo:</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-2 text-center">
+                            <div class="p-2 bg-yellow-100 rounded">
+                                <p class="font-semibold">Bajar de peso</p>
+                                <p class="text-lg font-bold text-yellow-800">${(get - 400).toFixed(0)} kcal</p>
+                            </div>
+                            <div class="p-2 bg-green-100 rounded">
+                                <p class="font-semibold">Mantener peso</p>
+                                <p class="text-lg font-bold text-green-800">${get.toFixed(0)} kcal</p>
+                            </div>
+                            <div class="p-2 bg-blue-100 rounded">
+                                <p class="font-semibold">Subir de peso</p>
+                                <p class="text-lg font-bold text-blue-800">${(get + 400).toFixed(0)} kcal</p>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-4">Cálculo realizado con la fórmula de ${formulaUtilizada}. Estos valores son una estimación. Para un plan preciso, consulta a un profesional.</p>
+                `;
+                resultadoDiv.className = 'mt-6 p-4 bg-amber-100 rounded-lg text-left';
+                resultadoDiv.classList.remove('hidden');
+
+            } else {
+                resultadoDiv.innerHTML = '<p>Por favor, introduce todos los valores correctamente.</p>';
+                resultadoDiv.className = 'mt-6 p-4 rounded-lg text-center bg-red-100 text-red-800';
+                resultadoDiv.classList.remove('hidden');
+            }
+        });
+
+
+        // --- IMC Calculator ---
+        const calcularImcBtn = document.getElementById('calcular-imc');
+        calcularImcBtn.addEventListener('click', () => {
+            const peso = parseFloat(document.getElementById('peso-imc').value);
+            const alturaCm = parseFloat(document.getElementById('altura-imc').value);
+            const resultadoDiv = document.getElementById('resultado-imc');
+
+            if (peso > 0 && alturaCm > 0) {
+                const alturaM = alturaCm / 100;
+                const imc = peso / (alturaM * alturaM);
+                const imcFixed = imc.toFixed(2);
+                
+                let categoria = '';
+                let colorClass = '';
+
+                if (imc < 18.5) {
+                    categoria = 'Bajo peso';
+                    colorClass = 'bg-blue-100 text-blue-800';
+                } else if (imc >= 18.5 && imc < 24.9) {
+                    categoria = 'Peso normal';
+                    colorClass = 'bg-green-100 text-green-800';
+                } else if (imc >= 25 && imc < 29.9) {
+                    categoria = 'Sobrepeso';
+                    colorClass = 'bg-yellow-100 text-yellow-800';
+                } else {
+                    categoria = 'Obesidad';
+                    colorClass = 'bg-red-100 text-red-800';
+                }
+
+                const pesoMin = (18.5 * (alturaM * alturaM)).toFixed(1);
+                const pesoMax = (24.9 * (alturaM * alturaM)).toFixed(1);
+
+                resultadoDiv.innerHTML = `
+                    <p class="text-xl font-bold">Tu IMC es: ${imcFixed}</p>
+                    <p class="text-lg mt-2">Categoría: <span class="font-semibold">${categoria}</span></p>
+                    <p class="mt-2 text-sm">Un rango de peso saludable para tu altura es entre ${pesoMin} kg y ${pesoMax} kg.</p>
+                `;
+                resultadoDiv.className = `mt-6 p-4 rounded-lg text-center ${colorClass}`;
+                resultadoDiv.classList.remove('hidden');
+            } else {
+                resultadoDiv.innerHTML = '<p>Por favor, introduce un peso y altura válidos.</p>';
+                resultadoDiv.className = 'mt-6 p-4 rounded-lg text-center bg-red-100 text-red-800';
+                resultadoDiv.classList.remove('hidden');
+            }
+        });
+
+        // --- Generic Gemini API Call Function ---
+        async function callGeminiAPI(prompt, base64ImageData = null) {
+            const apiKey = "AIzaSyAUfrovHm9E8KvnScjjDi31Sjfg8aJJqLQ";
+            
+            if (apiKey === "AQUÍ_VA_TU_API_KEY") {
+                return "Error: Por favor, añade tu API Key de Google AI Studio en el código para que esta función se active.";
+            }
+
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+            
+            let parts = [{ text: prompt }];
+            if (base64ImageData) {
+                parts.push({
+                    inlineData: {
+                        mimeType: "image/jpeg",
+                        data: base64ImageData
+                    }
+                });
+            }
+
+            const payload = {
+                contents: [{ role: "user", parts: parts }]
+            };
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                if (!response.ok) {
+                    throw new Error(`API request failed with status ${response.status}`);
+                }
+                const result = await response.json();
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    return result.candidates[0].content.parts[0].text;
+                } else {
+                    console.error("Unexpected API response structure:", result);
+                    if (result.candidates && result.candidates[0].finishReason) {
+                         return `La respuesta fue bloqueada por seguridad. Razón: ${result.candidates[0].finishReason}`;
+                    }
+                    return 'No se pudo obtener una respuesta válida de la IA.';
+                }
+            } catch (error) {
+                console.error("Error calling Gemini API:", error);
+                return 'Hubo un error al comunicarse con el servicio de IA. Por favor, inténtalo de nuevo más tarde.';
+            }
+        }
+        
+        // --- Helper to format text response ---
+        function formatResponseText(text) {
+             return text
+                .replace(/\*\*(.*?)\*\*/g, '<strong class="text-orange-600">$1</strong>') // Bold
+                .replace(/\* (.*?)\n/g, '<li>$1</li>') // List items
+                .replace(/(\n\n)/g, '<br>')
+                .replace(/\n/g, '<br>');
+        }
+
+        // --- Menu Generator ---
+        const generarMenuBtn = document.getElementById('generar-menu');
+        const generarListaBtn = document.getElementById('generar-lista-compras');
+
+        generarMenuBtn.addEventListener('click', async () => {
+            const objetivo = document.getElementById('objetivo-menu').value;
+            const ingresos = document.getElementById('ingresos-menu').value;
+            const duracion = document.getElementById('duracion-menu').value;
+            
+            const resultadoDiv = document.getElementById('resultado-menu');
+            const loader = document.getElementById('menu-loader');
+            const contentDiv = document.getElementById('menu-content');
+            
+            document.getElementById('resultado-lista').classList.add('hidden');
+            generarListaBtn.classList.add('hidden');
+
+            resultadoDiv.classList.remove('hidden');
+            loader.classList.remove('hidden');
+            contentDiv.innerHTML = '';
+
+            const prompt = `Crea un ejemplo de menú realista y saludable para ${duracion} día(s) para un joven. El objetivo es "${objetivo}". El presupuesto es "${ingresos}". Usa un lenguaje amigable y motivador. Estructura el menú claramente con títulos para cada comida y día (si es para 7 días). Sugiere porciones usando medidas caseras. Basa el menú en alimentos comunes. Al final, añade una pequeña nota positiva. Formatea los títulos de las comidas y días con ** (ej. **Día 1:**, **Desayuno:**).`;
+            
+            const responseText = await callGeminiAPI(prompt);
+            generatedMenuText = responseText;
+            contentDiv.innerHTML = formatResponseText(responseText);
+            loader.classList.add('hidden');
+            if (!responseText.startsWith("Error:")) {
+                generarListaBtn.classList.remove('hidden');
+            }
+        });
+
+        // --- Shopping List Generator ---
+        generarListaBtn.addEventListener('click', async () => {
+            if (!generatedMenuText) return;
+
+            const resultadoDiv = document.getElementById('resultado-lista');
+            const loader = document.getElementById('lista-loader');
+            const contentDiv = document.getElementById('lista-content');
+
+            resultadoDiv.classList.remove('hidden');
+            loader.classList.remove('hidden');
+            contentDiv.innerHTML = '';
+
+            const prompt = `Basado en el siguiente plan de comidas, crea una lista de compras categorizada. Las categorías deben ser: **Frutas y Verduras**, **Proteínas**, **Lácteos y Alternativas**, **Cereales y Granos**, y **Despensa**. No incluyas las cantidades, solo los nombres de los ingredientes. El plan de comidas es:\n\n${generatedMenuText}`;
+
+            const responseText = await callGeminiAPI(prompt);
+            contentDiv.innerHTML = formatResponseText(responseText);
+            loader.classList.add('hidden');
+        });
+
+        // --- Food Analyzer ---
+        const foodUploadInput = document.getElementById('food-image-upload');
+        const imagePreviewContainer = document.getElementById('image-preview-container');
+        const imagePreview = document.getElementById('image-preview');
+        const analizarComidaBtn = document.getElementById('analizar-comida-btn');
+        let imageBase64 = null;
+
+        foodUploadInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    imagePreview.src = event.target.result;
+                    imagePreviewContainer.classList.remove('hidden');
+                    imageBase64 = event.target.result.split(',')[1];
+                    analizarComidaBtn.disabled = false;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        analizarComidaBtn.addEventListener('click', async () => {
+            if (!imageBase64) return;
+
+            const resultadoDiv = document.getElementById('resultado-analizador');
+            const loader = document.getElementById('analizador-loader');
+            const contentDiv = document.getElementById('analizador-content');
+            
+            resultadoDiv.classList.remove('hidden');
+            loader.classList.remove('hidden');
+            contentDiv.innerHTML = '';
+            analizarComidaBtn.disabled = true;
+
+            const prompt = `Actúa como un nutriólogo amigable y educativo. Analiza la imagen de esta comida. 1. **Identifica los alimentos principales**. 2. **Estima los macronutrientes** de forma aproximada. 3. **Evalúa qué tan balanceado es el platillo**. 4. **Ofrece 2-3 sugerencias concretas** para hacerlo más saludable. 5. Termina con un comentario positivo. Usa un formato claro con títulos en negritas.`;
+
+            const responseText = await callGeminiAPI(prompt, imageBase64);
+            contentDiv.innerHTML = formatResponseText(responseText);
+            loader.classList.add('hidden');
+            analizarComidaBtn.disabled = false;
+        });
+
+        // --- Recipe Creator ---
+        const crearRecetaBtn = document.getElementById('crear-receta-btn');
+        crearRecetaBtn.addEventListener('click', async () => {
+            const ingredients = document.getElementById('ingredients-input').value;
+            if (!ingredients.trim()) {
+                alert('Por favor, escribe al menos un ingrediente.');
+                return;
+            }
+
+            const resultadoDiv = document.getElementById('resultado-receta');
+            const loader = document.getElementById('receta-loader');
+            const contentDiv = document.getElementById('receta-content');
+
+            resultadoDiv.classList.remove('hidden');
+            loader.classList.remove('hidden');
+            contentDiv.innerHTML = '';
+            crearRecetaBtn.disabled = true;
+
+            const prompt = `Actúa como un chef y nutriólogo creativo. Crea una receta saludable y sencilla usando los siguientes ingredientes: ${ingredients}. La receta debe incluir:
+            1.  Un **nombre creativo** para el platillo.
+            2.  Una lista de **ingredientes** (puedes añadir ingredientes básicos de despensa como aceite, sal, pimienta si es necesario).
+            3.  **Instrucciones** paso a paso, fáciles de seguir.
+            4.  Un **consejo de nutrición** sobre el platillo.
+            Formatea la respuesta con títulos en negritas para cada sección.`;
+
+            const responseText = await callGeminiAPI(prompt);
+            contentDiv.innerHTML = formatResponseText(responseText);
+            loader.classList.add('hidden');
+            crearRecetaBtn.disabled = false;
+        });
+
+
+        // --- Myth Investigator ---
+        const investigarMitoBtn = document.getElementById('investigar-mito-btn');
+        investigarMitoBtn.addEventListener('click', async () => {
+            const mitoInput = document.getElementById('mito-input');
+            const mito = mitoInput.value;
+            if (!mito.trim()) {
+                alert('Por favor, escribe un mito para investigar.');
+                return;
+            }
+
+            const resultadoDiv = document.getElementById('resultado-mito');
+            const loader = document.getElementById('mito-loader');
+            const contentDiv = document.getElementById('mito-content');
+
+            resultadoDiv.classList.remove('hidden');
+            loader.classList.remove('hidden');
+            contentDiv.innerHTML = '';
+            investigarMitoBtn.disabled = true;
+
+            const prompt = `Actúa como un experto en nutrición. Analiza el siguiente mito: "${mito}". Proporciona una respuesta clara y basada en evidencia. 1. Indica si es **Verdadero, Falso o Engañoso**. 2. Explica el porqué de forma sencilla. 3. Cita brevemente el consenso científico. Usa un tono educativo. Formatea con negritas para los puntos clave.`;
+
+            const responseText = await callGeminiAPI(prompt);
+            contentDiv.innerHTML = formatResponseText(responseText);
+            loader.classList.add('hidden');
+            investigarMitoBtn.disabled = false;
+        });
+
+        // --- NEW: Snack Finder ---
+        const buscarSnackBtn = document.getElementById('buscar-snack-btn');
+        buscarSnackBtn.addEventListener('click', async () => {
+            const craving = document.getElementById('craving-input').value;
+            if (!craving.trim()) {
+                alert('Por favor, describe tu antojo.');
+                return;
+            }
+
+            const resultadoDiv = document.getElementById('resultado-snack');
+            const loader = document.getElementById('snack-loader');
+            const contentDiv = document.getElementById('snack-content');
+
+            resultadoDiv.classList.remove('hidden');
+            loader.classList.remove('hidden');
+            contentDiv.innerHTML = '';
+            buscarSnackBtn.disabled = true;
+
+            const prompt = `Actúa como un nutriólogo creativo. Un joven tiene el siguiente antojo: "${craving}". Sugiere 3 ideas de snacks saludables. Importante: Incluye al menos una opción casera y fácil de preparar, y al menos una opción de un producto comercial de marca conocida que se pueda encontrar en un supermercado (ej. Oikos, Salmas, etc.). Para cada snack, proporciona: 1. Un **nombre atractivo**. 2. Una **breve descripción**. 3. **Por qué es una buena opción**.`;
+
+            const responseText = await callGeminiAPI(prompt);
+            contentDiv.innerHTML = formatResponseText(responseText);
+            loader.classList.add('hidden');
+            buscarSnackBtn.disabled = false;
+        });
+
+        // --- NEW: Macro Distributor ---
+        const calcularMacrosBtn = document.getElementById('calcular-macros-btn');
+        calcularMacrosBtn.addEventListener('click', async () => {
+            const calorias = document.getElementById('calorias-macros').value;
+            const objetivo = document.getElementById('objetivo-macros').value;
+            if (!calorias || calorias <= 0) {
+                alert('Por favor, introduce un número de calorías válido.');
+                return;
+            }
+
+            const resultadoDiv = document.getElementById('resultado-macros');
+            const loader = document.getElementById('macros-loader');
+            const contentDiv = document.getElementById('macros-content');
+
+            resultadoDiv.classList.remove('hidden');
+            loader.classList.remove('hidden');
+            contentDiv.innerHTML = '';
+            calcularMacrosBtn.disabled = true;
+
+            const prompt = `Actúa como un nutriólogo. Para un objetivo de **${objetivo}** y un total de **${calorias} kcal** diarias, sugiere una distribución de macronutrientes (proteínas, carbohidratos, grasas). Tu respuesta debe incluir:
+            1.  La **distribución en porcentajes**.
+            2.  La **cantidad en gramos** para cada macronutriente (considera 4 kcal/g para proteínas y carbohidratos, y 9 kcal/g para grasas).
+            3.  **2-3 ejemplos de alimentos** ricos en cada macronutriente.
+            Formatea la respuesta de manera clara, usando títulos para cada sección.`;
+
+            const responseText = await callGeminiAPI(prompt);
+            contentDiv.innerHTML = formatResponseText(responseText);
+            loader.classList.add('hidden');
+            calcularMacrosBtn.disabled = false;
+        });
+        
+        // --- NEW: Weekly Challenge ---
+        const generarRetoBtn = document.getElementById('generar-reto-btn');
+        generarRetoBtn.addEventListener('click', async () => {
+            const retoContent = document.getElementById('reto-content');
+            const retoLoader = document.getElementById('reto-loader');
+
+            retoContent.innerHTML = '';
+            retoLoader.classList.remove('hidden');
+            generarRetoBtn.disabled = true;
+
+            const prompt = `Genera un reto de bienestar simple, positivo y accionable para un joven. El reto debe ser algo que se pueda hacer en una semana. El formato de la respuesta debe ser: **Título del Reto:** [Nombre creativo del reto]. **Objetivo:** [Descripción clara y corta]. **Motivación:** [Frase corta y motivadora].`;
+            
+            const responseText = await callGeminiAPI(prompt);
+            const formattedText = responseText
+                .replace(/\*\*Título del Reto:\*\*/g, '<h4 class="text-2xl font-bold mb-2 text-green-700">')
+                .replace(/\*\*Objetivo:\*\*/g, '</h4><p class="text-gray-600 mb-4">')
+                .replace(/\*\*Motivación:\*\*/g, '</p><p class="text-orange-600 font-semibold">');
+
+            retoContent.innerHTML = formattedText + '</p>';
+            retoLoader.classList.add('hidden');
+            generarRetoBtn.disabled = false;
+        });
+
+        // --- NEW: Student Survival Guide ---
+        const guiaBtns = document.querySelectorAll('.btn-guia');
+        guiaBtns.forEach(button => {
+            button.addEventListener('click', async () => {
+                const topic = button.dataset.topic;
+                const guiaContentArea = document.getElementById('guia-content-area');
+                const guiaLoader = document.getElementById('guia-loader');
+                const guiaContent = document.getElementById('guia-content');
+
+                guiaContentArea.classList.remove('hidden');
+                guiaContent.innerHTML = '';
+                guiaLoader.classList.remove('hidden');
+
+                const prompt = `Actúa como un nutriólogo y consejero para estudiantes. Da 3-4 consejos prácticos y directos sobre el siguiente tema: "${topic}". Usa un lenguaje cercano y fácil de entender para un joven. Formatea la respuesta como una lista de puntos clave, usando un emoji relevante para cada punto.`;
+
+                const responseText = await callGeminiAPI(prompt);
+                guiaContent.innerHTML = formatResponseText(responseText);
+                guiaLoader.classList.add('hidden');
+            });
+        });
+
+        // --- NEW: Workout Generator ---
+        const generarRutinaBtn = document.getElementById('generar-rutina-btn');
+        generarRutinaBtn.addEventListener('click', async () => {
+            const objetivo = document.getElementById('objetivo-rutina').value;
+            const nivel = document.getElementById('nivel-rutina').value;
+            const equipo = document.getElementById('equipo-rutina').value;
+
+            const resultadoDiv = document.getElementById('resultado-rutina');
+            const loader = document.getElementById('rutina-loader');
+            const contentDiv = document.getElementById('rutina-content');
+
+            resultadoDiv.classList.remove('hidden');
+            loader.classList.remove('hidden');
+            contentDiv.innerHTML = '';
+            generarRutinaBtn.disabled = true;
+
+            const prompt = `Actúa como un entrenador personal. Crea un plan de entrenamiento de **7 días** para hacer en casa para un joven con el objetivo de **${objetivo}**, un nivel **${nivel}** y que tiene disponible el siguiente equipo: **${equipo}**. La rutina debe ser clara y fácil de seguir. Estructura la respuesta por Día 1, Día 2, ..., Día 7. Para cada día de ejercicio, lista 4-5 ejercicios con el número de series y repeticiones. Incluye días de descanso activo (ej. caminata ligera). Si el nivel es 'Principiante', evita ejercicios de alto impacto como saltos. Incluye un breve calentamiento y estiramiento al final.`;
+
+            const responseText = await callGeminiAPI(prompt);
+            contentDiv.innerHTML = formatResponseText(responseText);
+            loader.classList.add('hidden');
+            generarRutinaBtn.disabled = false;
+        });
+
+        // --- NEW: Emotional Eating Coach ---
+        const ayudaAntojoBtn = document.getElementById('ayuda-antojo-btn');
+        ayudaAntojoBtn.addEventListener('click', async () => {
+            const emocion = document.getElementById('emocion-input').value;
+            if (!emocion.trim()) {
+                alert('Por favor, describe cómo te sientes.');
+                return;
+            }
+
+            const resultadoDiv = document.getElementById('resultado-antojo');
+            const loader = document.getElementById('antojo-loader');
+            const contentDiv = document.getElementById('antojo-content');
+
+            resultadoDiv.classList.remove('hidden');
+            loader.classList.remove('hidden');
+            contentDiv.innerHTML = '';
+            ayudaAntojoBtn.disabled = true;
+
+            const prompt = `Actúa como un coach de bienestar compasivo y amigable. Un joven se siente así: "${emocion}". Valida sus sentimientos y ofrécele 3 estrategias o actividades alternativas y sencillas que no involucren comida para manejar esa emoción. Por ejemplo, si está estresado, sugiere una respiración profunda, escuchar una canción o dar un paseo corto. La respuesta debe ser positiva y de apoyo.`;
+
+            const responseText = await callGeminiAPI(prompt);
+            contentDiv.innerHTML = formatResponseText(responseText);
+            loader.classList.add('hidden');
+            ayudaAntojoBtn.disabled = false;
+        });
+        
+        // --- NEW: Basic Concepts Accordion ---
+        const concepts = [
+            { q: "🥑 Macronutrientes", a: "Son los nutrientes que tu cuerpo necesita en grandes cantidades para obtener energía y funcionar correctamente. Se dividen en tres tipos: carbohidratos (pan, arroz, frutas), proteínas (carne, frijoles, huevos) y grasas (aguacate, nueces, aceite de oliva)." },
+            { q: "🥕 Micronutrientes", a: "Son las vitaminas y minerales que tu cuerpo necesita en pequeñas cantidades para regular procesos como el crecimiento, la defensa contra enfermedades y el bienestar general. Se encuentran principalmente en frutas y verduras." },
+            { q: "🔥 Caloría", a: "Es una unidad de medida que indica la cantidad de energía que un alimento le proporciona a tu cuerpo. Necesitas un balance entre las calorías que consumes y las que gastas para mantener un peso saludable." },
+            { q: "⚙️ Metabolismo Basal", a: "Es la cantidad mínima de energía (calorías) que tu cuerpo necesita para realizar sus funciones vitales mientras está en reposo total, como respirar, mantener la temperatura corporal y hacer que tu corazón lata." }
+        ];
+
+        const accordionContainer = document.getElementById('conceptos-accordion');
+        concepts.forEach((concept) => {
+            const item = document.createElement('div');
+            item.className = 'card';
+            item.innerHTML = `
+                <button class="accordion-button">
+                    <span>${concept.q}</span>
+                    <svg class="w-6 h-6 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div class="accordion-content">
+                    <p class="p-5 pt-0 text-gray-600">${concept.a}</p>
+                </div>
+            `;
+            accordionContainer.appendChild(item);
+        });
+
+        const accordionButtons = document.querySelectorAll('.accordion-button');
+        accordionButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const content = button.nextElementSibling;
+                const icon = button.querySelector('svg');
+                
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                    icon.style.transform = 'rotate(0deg)';
+                } else {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                    icon.style.transform = 'rotate(180deg)';
+                }
+            });
+        });
+
+    });
+    </script>
+</body>
+</html>
